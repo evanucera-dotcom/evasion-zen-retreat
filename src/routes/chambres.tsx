@@ -36,10 +36,6 @@ const ROOMS = [
 
 const EQUIP = [
   {
-    title: "Chambre",
-    items: [{ icon: Bed, label: "Lit king size" }],
-  },
-  {
     title: "Bien-être",
     items: [
       { icon: Flame, label: "Sauna *" },
@@ -114,14 +110,14 @@ function ChambresPage() {
             <h2 className="mt-3 font-serif text-4xl md:text-5xl">Équipements & services</h2>
           </div>
         </Reveal>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-3">
           {EQUIP.map((cat, i) => (
             <Reveal key={cat.title} delay={i * 100}>
-              <div className="glass h-full rounded-2xl p-7">
+              <div className="glass h-full rounded-2xl p-7 text-center">
                 <h3 className="font-serif text-xl text-gold">{cat.title}</h3>
                 <ul className="mt-5 space-y-3">
                   {cat.items.map((it) => (
-                    <li key={it.label} className="flex items-center gap-3 text-sm text-foreground/85">
+                    <li key={it.label} className="flex items-center justify-center gap-3 text-sm text-foreground/85">
                       <it.icon className="h-4 w-4 text-gold" />
                       {it.label}
                     </li>
