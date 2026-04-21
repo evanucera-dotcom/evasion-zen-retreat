@@ -1,24 +1,20 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
-
+import { Outlet, createRootRoute, HeadContent, Scripts, Link } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
+import { Loader } from "@/components/Loader";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+import { ReservationProvider } from "@/components/ReservationProvider";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+    <div className="flex min-h-screen items-center justify-center px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
+        <h1 className="font-display text-8xl text-gold">404</h1>
+        <h2 className="mt-2 font-serif text-2xl">Page introuvable</h2>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Cette page s'est évaporée comme un parfum dans la nuit.
         </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+        <Link to="/" className="btn-luxe btn-luxe-hover mt-8 inline-flex">Retour à l'accueil</Link>
       </div>
     </div>
   );
@@ -29,21 +25,13 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Evasion Spa 35 — Love Rooms & Spa privatif près de Rennes" },
+      { name: "description", content: "Love rooms d'exception avec jacuzzi et sauna privé à 10 minutes de Rennes. Une parenthèse romantique inoubliable." },
+      { property: "og:title", content: "Evasion Spa 35 — Love Rooms près de Rennes" },
+      { property: "og:description", content: "Love rooms avec jacuzzi & sauna privé. Vivez une expérience romantique unique." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-    ],
+    links: [{ rel: "stylesheet", href: appCss }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -52,18 +40,22 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        <Scripts />
-      </body>
+    <html lang="fr" className="dark">
+      <head><HeadContent /></head>
+      <body>{children}<Scripts /></body>
     </html>
   );
 }
 
 function RootComponent() {
-  return <Outlet />;
+  return (
+    <ReservationProvider>
+      <Loader />
+      <Header />
+      <main className="pt-24">
+        <Outlet />
+      </main>
+      <Footer />
+    </ReservationProvider>
+  );
 }
