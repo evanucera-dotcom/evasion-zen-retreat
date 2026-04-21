@@ -5,6 +5,7 @@ import hero from "@/assets/hero.jpg";
 import { ReserveButton } from "@/components/ReservationProvider";
 import { Reveal } from "@/components/Reveal";
 import { AutoCarousel } from "@/components/AutoCarousel";
+import { ALL_PHOTOS } from "@/lib/photos";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -113,7 +114,7 @@ function HomePage() {
             </div>
           </Reveal>
           <Reveal>
-            <AutoCarousel count={6} />
+            <AutoCarousel photos={ALL_PHOTOS} label="Evasion Spa 35" />
           </Reveal>
         </div>
       </section>

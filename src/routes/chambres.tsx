@@ -3,6 +3,7 @@ import { Bath, Bed, Coffee, Flame, Wifi, Tv, Wind, Shirt, Sparkles, Footprints }
 import { ReserveButton } from "@/components/ReservationProvider";
 import { Reveal } from "@/components/Reveal";
 import { RoomGallery } from "@/components/RoomGallery";
+import { ROOM_LOVE_PHOTOS, ROOM_04_PHOTOS } from "@/lib/photos";
 
 export const Route = createFileRoute("/chambres")({
   head: () => ({
@@ -22,12 +23,14 @@ const ROOMS = [
     desc: "Une suite romantique sur deux étages avec jacuzzi privatif et un sauna privé. L'écrin parfait pour une parenthèse de bien-être à deux.",
     highlight: "Avec sauna privé",
     sauna: true,
+    photos: ROOM_LOVE_PHOTOS,
   },
   {
     name: "Chambre 04",
     desc: "Une suite raffinée sur deux étages, jacuzzi privatif et confort haut de gamme. Une bulle d'intimité pour une nuit inoubliable.",
     highlight: "Jacuzzi & confort",
     sauna: false,
+    photos: ROOM_04_PHOTOS,
   },
 ];
 
@@ -82,7 +85,7 @@ function ChambresPage() {
         {ROOMS.map((room, i) => (
           <Reveal key={room.name}>
             <div className={`grid items-center gap-10 md:grid-cols-2 ${i % 2 ? "md:[&>*:first-child]:order-2" : ""}`}>
-              <RoomGallery count={6} label={room.name} />
+              <RoomGallery label={room.name} photos={room.photos} />
               <div>
                 <p className="font-serif text-xs uppercase tracking-[0.4em] text-gold">
                   {room.highlight}

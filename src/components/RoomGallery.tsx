@@ -3,11 +3,33 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
 
-export function RoomGallery({ count = 6, label }: { count?: number; label: string }) {
+export function RoomGallery({
+  count = 6,
+  label,
+  photos,
+}: {
+  count?: number;
+  label: string;
+  photos?: string[];
+}) {
+  const total = photos?.length ?? count;
   const [idx, setIdx] = useState(0);
   const [lightbox, setLightbox] = useState(false);
-  const next = () => setIdx((i) => (i + 1) % count);
-  const prev = () => setIdx((i) => (i - 1 + count) % count);
+  const next = () => setIdx((i) => (i + 1) % total);
+  const prev = () => setIdx((i) => (i - 1 + total) % total);
+
+  const renderImage = (className?: string) =>
+    photos && photos[idx] ? (
+      <div className={`aspect-[16/10] overflow-hidden rounded-2xl border border-gold/20 ${className ?? ""}`}>
+        <img
+          src={photos[idx]}
+          alt={`${label} — photo ${idx + 1}`}
+          className="h-full w-full object-cover"
+        />
+      </div>
+    ) : (
+      <PhotoPlaceholder label={`${label} • ${idx + 1}/${total}`} className="!aspect-[16/10]" />
+    );
 
   return (
     <>
@@ -16,7 +38,7 @@ export function RoomGallery({ count = 6, label }: { count?: number; label: strin
           onClick={() => setLightbox(true)}
           className="cursor-zoom-in transition hover:opacity-95"
         >
-          <PhotoPlaceholder label={`${label} • ${idx + 1}/${count}`} className="!aspect-[16/10]" />
+          {renderImage()}
         </div>
         <button
           onClick={prev}
@@ -33,7 +55,7 @@ export function RoomGallery({ count = 6, label }: { count?: number; label: strin
           <ChevronRight className="h-5 w-5" />
         </button>
         <div className="mt-4 flex justify-center gap-2">
-          {Array.from({ length: count }).map((_, i) => (
+          {Array.from({ length: total }).map((_, i) => (
             <button
               key={i}
               onClick={() => setIdx(i)}
@@ -70,7 +92,7 @@ export function RoomGallery({ count = 6, label }: { count?: number; label: strin
               className="w-full max-w-5xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <PhotoPlaceholder label={`${label} • ${idx + 1}/${count}`} className="!aspect-[16/10]" />
+              {renderImage()}
             </motion.div>
           </motion.div>
         )}
